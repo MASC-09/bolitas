@@ -4,42 +4,73 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
-    public float jumpSpeed;
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpSpeed;
 
+    private enum MovementState { idle, running, jumping, falling}; //create you own data stype
     bool isGrounded;
 
     Rigidbody2D rb;
     // Start is called before the first frame update
-    void Start()
+    private Animator anim;
+    private SpriteRenderer sprite;
+    private float dirX = 0;
+
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();    
-        
+        // Debug.Log("Hello World");
+        rb = GetComponent<Rigidbody2D>();   
+        anim = GetComponent<Animator>(); 
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetKey("d") || Input.GetKey("right"))
-        {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
-        }
-        else if (Input.GetKey("a") || Input.GetKey("left"))
-        {
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
-        }
-        else
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
+        dirX = Input.GetAxisRaw("Horizontal"); //raw get the player movement to 0 inmediatly after the key is no longer pressed 
+        rb.velocity = new Vector2(dirX * speed, rb.velocity.y);
+        
+        // if(rb.velocity.x < 0 )
+        // {
+        //     transform.Rotate(0f, 180f,0f);
+        // }
 
-        if (Input.GetKey("space"))
+        if (Input.GetButtonDown("Jump") && CheckGround.isGrounded) 
         {
             //salto sencillo
-            if(CheckGround.isGrounded)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-            }
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
+
+        UpdateAnimationState();
+    }
+
+    private void UpdateAnimationState()
+    {
+        MovementState state;
+        if (dirX > 0f)
+        {
+            state = MovementState.running;
+            sprite.flipX = false;
+        }
+        else if (dirX < 0f)
+        {
+            state = MovementState.running;
+            sprite.flipX = true;
+        }
+        else 
+        {
+            state = MovementState.idle;
+        }
+
+        if (rb.velocity.y > .1f)
+        {
+            state = MovementState.jumping;
+        }
+        else  if (rb.velocity.y < -.1f)
+        {
+            state = MovementState.falling;
+        }
+
+        anim.SetInteger("state",(int)state);
     }
 }
