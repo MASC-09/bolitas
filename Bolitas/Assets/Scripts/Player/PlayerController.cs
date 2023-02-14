@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float jumpSpeed;
+    [SerializeField] private Transform firePoint;
 
     private enum MovementState { idle, running, jumping, falling}; //create you own data stype
     bool isGrounded;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private Animator anim;
     private SpriteRenderer sprite;
+    
     private float dirX = 0;
 
     private void Start()
@@ -51,11 +53,13 @@ public class PlayerController : MonoBehaviour
         {
             state = MovementState.running;
             sprite.flipX = false;
+            FlipFirePoint(false);
         }
         else if (dirX < 0f)
         {
             state = MovementState.running;
             sprite.flipX = true;
+            FlipFirePoint(true);
         }
         else 
         {
@@ -72,5 +76,15 @@ public class PlayerController : MonoBehaviour
         }
 
         anim.SetInteger("state",(int)state);
+    }
+
+    void FlipFirePoint(bool flip)
+    {
+        var pos = firePoint.localPosition;
+        var rotation = firePoint.localRotation;
+        pos.x = Mathf.Abs(pos.x) * (flip ? -1 : 1);
+        rotation.y = (flip ? 180 : 0);
+        firePoint.localPosition = pos;
+        firePoint.localRotation = rotation;
     }
 }
