@@ -64,3 +64,6 @@ TagManager:
   - name: Player
     uniqueID: 3742027437
     locked: 0
+  - name: Front
+    uniqueID: 1466978589
+    locked: 0
