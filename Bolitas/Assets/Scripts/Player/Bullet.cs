@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float bulletSpeed = 20f;
-    [SerializeField]  private int bulletDamage = 40;
+    [SerializeField] private int bulletDamage = 40;
 
     [SerializeField] private GameObject impactEffect; //Add effect when the bullet hits something.
     // Start is called before the first frame update
@@ -29,5 +29,8 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    public void addDamage()
+    {
+        bulletDamage = bulletDamage * 2;
+    }
 }
