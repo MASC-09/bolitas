@@ -24,6 +24,7 @@ public class PowerUp : MonoBehaviour
         {
             Damage damage = GetComponent<Damage>();
             Destroy(collision.gameObject);
+            //Lack of damage increase, I need help here
         }
     }
 }
