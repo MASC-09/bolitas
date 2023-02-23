@@ -18,17 +18,23 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.name == "GroundCheck" ||  collision.name == "Player")
+        {
+            Weapon weapon = null;
+            if (collision.name == "GroundCheck")
+            {
+                weapon = collision.GetComponentInParent<Weapon>();
+            }
+            else if (collision.name == "Player")
+            {
+                weapon = collision.GetComponent<Weapon>();
+            }
+            else 
+            {
 
-        Weapon weapon = null;
-        if (collision.name == "GroundCheck")
-        {
-            weapon = collision.GetComponentInParent<Weapon>();
+            }
+            weapon.setIsPoweredUp(true);
+            Destroy(gameObject);
         }
-        else 
-        {
-            weapon = collision.GetComponent<Weapon>();
-        }
-        weapon.setIsPoweredUp(true);
-        Destroy(gameObject);
     }
 }

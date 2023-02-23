@@ -10,7 +10,10 @@ public class PlayerRespawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //if (PlayerPrefs.GetString("Scene") == SceneManager.GetActiveScene().name)
+        //{
+        //    transform.position = (new Vector2(PlayerPrefs.GetFloat("CheckpointPositionX"), PlayerPrefs.GetFloat("CheckpointPositionY")));
+        //}
     }
     public void ReachedCheckpoint(string Scene, float x, float y)
     {
