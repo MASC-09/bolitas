@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject poweredBulletPrefab;
     public bool isPoweredUp = false;
-
+    [SerializeField] private float timeToWearOff = 2f;
     // void Start()
     // {
 
@@ -17,11 +17,13 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetButtonDown("Fire1"))
         {
             if (isPoweredUp)
             {
                 ShootPoweredUp();
+                StartCoroutine(WearOffPowerUp());
             }
             else
             {
@@ -43,5 +45,14 @@ public class Weapon : MonoBehaviour
     public void setIsPoweredUp(bool state)
     {
         isPoweredUp = state;
+    }
+
+    IEnumerator WearOffPowerUp()
+    {    
+        while (true)
+        {
+            yield return new WaitForSeconds(timeToWearOff);
+            setIsPoweredUp(false);
+        }
     }
 }
