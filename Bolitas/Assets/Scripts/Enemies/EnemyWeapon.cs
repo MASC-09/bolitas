@@ -25,13 +25,11 @@ public class EnemyWeapon : MonoBehaviour
 
     IEnumerator ShootAtInterval()
     {    
+        while (true)
         {
-            while (true)
-            {
-                yield return new WaitForSeconds(shotInterval);
-                anim.SetTrigger("shootSting");
-                Instantiate(bee_sting, bee_firePoint.position, bee_firePoint.rotation);
-            }
+            yield return new WaitForSeconds(shotInterval);
+            anim.SetTrigger("shootSting");
+            Instantiate(bee_sting, bee_firePoint.position, bee_firePoint.rotation);
         }
     }
 }
