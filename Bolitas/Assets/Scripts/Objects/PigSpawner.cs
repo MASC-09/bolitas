@@ -9,11 +9,16 @@ public class PigSpawner : MonoBehaviour
     [SerializeField] private float spawnRate = 2.0f;
     [SerializeField] private int spawnLimit = 5;
     private int enemiesSpawned = 0;
+    [SerializeField] private bool isOn = false;
 
+    private Coroutine spawnCoroutine;
 
     void Start()
     {
-        StartCoroutine(SpawnPigs());
+        if(isOn)
+        {
+            StartSpawnCoroutine();
+        }
     }
 
     IEnumerator SpawnPigs()
@@ -23,6 +28,38 @@ public class PigSpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnRate);
             Instantiate(Pig, transform.position, transform.rotation);
             enemiesSpawned++;
+        }
+        
+    }
+
+    public void setIsOn(bool state)
+    {
+        isOn = state;
+        if(isOn)
+        {
+            StartSpawnCoroutine();
+        }
+        else 
+        {
+            StopSpawnCoroutine();
+        }
+    }
+
+    private void StartSpawnCoroutine()
+    {
+        if (spawnCoroutine == null)
+        {
+            spawnCoroutine = StartCoroutine(SpawnPigs());
+        }
+    }
+
+
+    private void StopSpawnCoroutine()
+    {
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine =  null;
         }
     }
 }

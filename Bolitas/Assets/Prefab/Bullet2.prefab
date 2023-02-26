@@ -139,5 +139,5 @@ MonoBehaviour:
   rb: {fileID: 4843352110681315438}
   bulletSpeed: 20
   bulletDamage: 60
-  knockBackPower: 5
+  knockBackPower: 2.6
   impactEffect: {fileID: 0}

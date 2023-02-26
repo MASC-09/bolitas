@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerRespawn : MonoBehaviour
 {
     private float CheckpointPositionX, CheckpointPositionY;
-    public Animator animator;
+    // public Animator animator;
 
     void Start()
     {

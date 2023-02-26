@@ -15,17 +15,20 @@ public class Bullet : MonoBehaviour
         rb.velocity = transform.right * bulletSpeed; 
     }
 
-    void OnTriggerEnter2D (Collider2D hitInfo)
+    void OnTriggerEnter2D (Collider2D collision)
     {
-        Enemy enemy = hitInfo.GetComponent<Enemy>();
-        Rigidbody2D enemyRb = hitInfo.GetComponent<Rigidbody2D>();
+        Enemy enemy = collision.GetComponent<Enemy>();
+        Rigidbody2D enemyRb = collision.GetComponent<Rigidbody2D>();
 
-        if (enemy != null)
+        if(collision.CompareTag("ground") ||collision.CompareTag("LevelLimit") ||collision.CompareTag("Trap") ||collision.CompareTag("Enemy"))
         {
-            Debug.Log(hitInfo.name);
-            enemy.TakeDamage(bulletDamage);
-            knockBack(enemyRb);
-            // Instantiate(impactEffect, transform.position, transform.rotation);
+            Debug.Log(collision.name);
+            if (enemy != null)
+            {
+                enemy.TakeDamage(bulletDamage);
+                knockBack(enemyRb);
+                // Instantiate(impactEffect, transform.position, transform.rotation);
+            }
             Destroy(gameObject);
         }
     }

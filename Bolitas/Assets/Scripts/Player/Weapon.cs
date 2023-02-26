@@ -23,7 +23,7 @@ public class Weapon : MonoBehaviour
             if (isPoweredUp)
             {
                 ShootPoweredUp();
-                StartCoroutine(WearOffPowerUp());
+                // StartCoroutine(WearOffPowerUp());
             }
             else
             {
@@ -45,6 +45,10 @@ public class Weapon : MonoBehaviour
     public void setIsPoweredUp(bool state)
     {
         isPoweredUp = state;
+        if (isPoweredUp)
+        {
+            StartCoroutine(WearOffPowerUp());
+        }
     }
 
     IEnumerator WearOffPowerUp()
